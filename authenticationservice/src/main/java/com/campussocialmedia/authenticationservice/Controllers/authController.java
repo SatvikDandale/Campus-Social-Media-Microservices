@@ -1,6 +1,8 @@
 package com.campussocialmedia.authenticationservice.Controllers;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.campussocialmedia.authenticationservice.Entities.AuthenticationRequest;
 import com.campussocialmedia.authenticationservice.Entities.AuthenticationResponse;
@@ -81,6 +83,17 @@ public class authController {
         // userName already exists.
         return new ResponseEntity<>(new ExceptionResponse(new Date(), "User Already Exists", "/signUp"),
                 HttpStatus.CONFLICT);
+    }
+
+    /*
+     * For authorization, other services might need to get the userName from tokens.
+     */
+    @PostMapping(value = "/jwt")
+    public ResponseEntity<?> decodeJwt(@RequestBody Map<String, String> reqBody) {
+        String userName = authService.decodeJwt(reqBody.get("token"));
+        Map<String, String> response = new HashMap<String, String>();
+        response.put("userName", userName);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

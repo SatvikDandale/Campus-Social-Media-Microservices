@@ -75,4 +75,9 @@ public class authServiceImpl implements authServiceInterface {
         return null;
     }
 
+    @Override
+    public String decodeJwt(String jwtToken) {
+        return jwtTokenUtil.extractUsername(jwtToken);
+    }
+
 }

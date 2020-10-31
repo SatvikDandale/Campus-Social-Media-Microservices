@@ -7,4 +7,6 @@ public interface authServiceInterface {
     public AuthenticationResponse login(String userName, String password);
 
     public AuthenticationResponse signUp(AuthenticationRequest authenticationRequest);
+
+    public String decodeJwt(String jwtToken);
 }

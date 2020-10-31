@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -97,9 +98,13 @@ public class UserResourceController {
     }
 
     @PostMapping("/follow")
-    public ResponseEntity<?> addFollowerFollowing(@RequestBody Map<String, String> jsonObject) {
+    public ResponseEntity<?> addFollowerFollowing(@RequestBody Map<String, String> jsonObject,
+            @RequestHeader(name = "Authorization") String token) {
         // TODO: Authorization using token and username
         // String jwt = token.substring(7);
+        // String userName = jwtUtil.extractUsername(jwt);
+        // System.out.print(userName);
+        String jwt = token.substring(7);
         // String userName = jwtUtil.extractUsername(jwt);
         // System.out.print(userName);
         service.addFollowerFollowing(jsonObject.get("follower"), jsonObject.get("following"));
