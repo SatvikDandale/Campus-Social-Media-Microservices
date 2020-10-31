@@ -37,4 +37,12 @@ public class GeneralizedExceptionHandler extends ResponseEntityExceptionHandler 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(UserNameMismatch.class)
+    public final ResponseEntity<?> userNameMismatch(UserNameMismatch ex, WebRequest req) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                "The token does not belong to the userName: " + ex.getMessage(), req.getDescription(false));
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+    }
+
 }

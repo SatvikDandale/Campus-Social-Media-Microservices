@@ -89,8 +89,8 @@ public class authController {
      * For authorization, other services might need to get the userName from tokens.
      */
     @PostMapping(value = "/jwt")
-    public ResponseEntity<?> decodeJwt(@RequestBody Map<String, String> reqBody) {
-        String userName = authService.decodeJwt(reqBody.get("token"));
+    public ResponseEntity<Map<String, String>> decodeJwt(@RequestBody Map<String, String> reqBody) {
+        String userName = authService.decodeJwt((reqBody.get("token")).substring(7));
         Map<String, String> response = new HashMap<String, String>();
         response.put("userName", userName);
         return new ResponseEntity<>(response, HttpStatus.OK);

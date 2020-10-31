@@ -65,7 +65,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 		String username = null;
 		String jwt = null;
-		if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/signUp")) {
+		if (request.getRequestURI().equals("/login") || request.getRequestURI().equals("/signUp")
+				|| request.getRequestURI().equals("/jwt")) {
 			chain.doFilter(request, response);
 			// return;
 		} else {

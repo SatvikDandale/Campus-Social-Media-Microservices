@@ -3,17 +3,21 @@ package com.campussocialmedia.userservice.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.campussocialmedia.userservice.Proxies.AuthServiceProxy;
 import com.campussocialmedia.userservice.entity.User;
 import com.campussocialmedia.userservice.entity.UserAbout;
 import com.campussocialmedia.userservice.entity.UserDTO;
 import com.campussocialmedia.userservice.entity.UserDetailsResponse;
 import com.campussocialmedia.userservice.entity.UserFollowerFollowing;
 import com.campussocialmedia.userservice.repository.UserRepository;
+import com.campussocialmedia.userservice.exceptions.UserNameMismatch;
 import com.campussocialmedia.userservice.exceptions.UserNameNotFoundException;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +27,8 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private AuthServiceProxy authServiceProxy;
 
     private User convertToEntity(UserDTO user) {
         return modelMapper.map(user, User.class);
@@ -75,7 +81,14 @@ public class UserService {
         return userAbout;
     }
 
-    public void addFollowerFollowing(String follower, String following) {
+    public void addFollowerFollowing(String follower, String following, String token) {
+
+        Map<String, String> reqBody = new HashMap<String, String>();
+        reqBody.put("token", token);
+        ResponseEntity<Map<String, String>> response = authServiceProxy.decodeJwt(reqBody);
+        String userName = response.getBody().get("userName");
+        if (!userName.equals(follower))
+            throw new UserNameMismatch(follower);
 
         User followerEntity = repository.findUserByUserName(follower);
         if (followerEntity == null)

@@ -104,10 +104,9 @@ public class UserResourceController {
         // String jwt = token.substring(7);
         // String userName = jwtUtil.extractUsername(jwt);
         // System.out.print(userName);
-        String jwt = token.substring(7);
         // String userName = jwtUtil.extractUsername(jwt);
         // System.out.print(userName);
-        service.addFollowerFollowing(jsonObject.get("follower"), jsonObject.get("following"));
+        service.addFollowerFollowing(jsonObject.get("follower"), jsonObject.get("following"), token);
         return new ResponseEntity<>("Follower Added", HttpStatus.OK);
 
     }
