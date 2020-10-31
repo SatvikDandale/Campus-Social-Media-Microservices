@@ -47,10 +47,10 @@ public class UserResourceController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/userAbout/{userName}")
     public ResponseEntity<?> findUser(@PathVariable String userName) {
         try {
-            UserDTO user = service.getUserByUserName(userName);
+            UserAbout user = service.getUserAboutByUserName(userName);
 
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
