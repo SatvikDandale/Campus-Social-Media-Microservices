@@ -1,0 +1,1 @@
+cd authenticationservice && mvn spring-boot:run

@@ -1,0 +1,1 @@
+cd eurekaserver && mvn spring-boot:run
