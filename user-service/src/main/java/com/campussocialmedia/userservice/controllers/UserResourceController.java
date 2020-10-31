@@ -40,6 +40,13 @@ public class UserResourceController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    // to return self user object
+    @GetMapping("/self")
+    public ResponseEntity<?> self(@RequestHeader("Authorization") String token) {
+        UserDTO user = service.getUserFromToken(token);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @GetMapping("/user/{userName}")
     public ResponseEntity<?> findUser(@PathVariable String userName) {
         try {
@@ -100,7 +107,6 @@ public class UserResourceController {
     @PostMapping("/follow")
     public ResponseEntity<?> addFollowerFollowing(@RequestBody Map<String, String> jsonObject,
             @RequestHeader(name = "Authorization") String token) {
-        // TODO: Authorization using token and username
         // String jwt = token.substring(7);
         // String userName = jwtUtil.extractUsername(jwt);
         // System.out.print(userName);

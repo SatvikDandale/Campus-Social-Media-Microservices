@@ -134,4 +134,13 @@ public class UserService {
         return convoNames;
     }
 
+    public UserDTO getUserFromToken(String token) {
+        Map<String, String> reqBody = new HashMap<String, String>();
+        reqBody.put("token", token);
+        ResponseEntity<Map<String, String>> response = authServiceProxy.decodeJwt(reqBody);
+        String userName = response.getBody().get("userName");
+        UserDTO user = getUserByUserName(userName);
+        return user;
+    }
+
 }
