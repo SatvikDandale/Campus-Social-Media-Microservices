@@ -127,4 +127,13 @@ public class UserResourceController {
         return new ResponseEntity<>(fileURL, HttpStatus.OK);
     }
 
+    @PostMapping("/unfollow")
+    public ResponseEntity<?> unfollowUser(@RequestHeader(name = "Authorization") String token,
+            @RequestBody Map<String, String> jsonObject) {
+        // String jwt = token.substring(7);
+        // String userName = jwtUtil.extractUsername(jwt);
+
+        service.removeFollowerFollowing(jsonObject.get("follower"), jsonObject.get("following"), token);
+        return new ResponseEntity<>("UnFollowed", HttpStatus.OK);
+    }
 }

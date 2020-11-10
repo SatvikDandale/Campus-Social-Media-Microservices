@@ -1,5 +1,6 @@
 package com.campussocialmedia.userservice.service;
 
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,6 +137,36 @@ public class UserService {
         convoNames.put("Personal", user.getPersonalChats());
         convoNames.put("Group", user.getGroups());
         return convoNames;
+    }
+
+    public void removeFollowerFollowing(String follower, String following, String token) {
+
+        Map<String, String> reqBody = new HashMap<String, String>();
+        reqBody.put("token", token);
+        ResponseEntity<Map<String, String>> response = authServiceProxy.decodeJwt(reqBody);
+        String jwtUserName = response.getBody().get("userName");
+
+        if (!jwtUserName.equals(follower))
+            throw new UserNameMismatch("Token does not match with userName");
+        User followerEntity = repository.findUserByUserName(follower);
+        if (followerEntity == null)
+            throw new UserNameNotFoundException("User " + follower + " Not Found");
+        User followingEntity = repository.findUserByUserName(following);
+        if (followingEntity == null)
+            throw new UserNameNotFoundException("User " + following + " Not Found");
+        List<String> followersList = followingEntity.getFollowers();
+        if (!followersList.contains(follower))
+            return;
+        followersList.remove(follower);
+        followingEntity.setFollowers(followersList);
+        repository.updateUser(followingEntity);
+
+        List<String> followingList = followerEntity.getFollowing();
+        if (!followingList.contains(following))
+            return;
+        followingList.remove(following);
+        followerEntity.setFollowing(followingList);
+        repository.updateUser(followerEntity);
     }
 
     public UserDTO getUserFromToken(String token) {
