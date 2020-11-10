@@ -1,0 +1,1 @@
+cd post-service && mvn spring-boot:run

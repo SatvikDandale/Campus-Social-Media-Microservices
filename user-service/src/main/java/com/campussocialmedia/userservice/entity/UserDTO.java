@@ -1,5 +1,6 @@
 package com.campussocialmedia.userservice.entity;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class UserDTO {
@@ -12,17 +13,75 @@ public class UserDTO {
 	private String phone;
 	private List<String> personalChats;
 	private List<String> groups;
+	private List<Experience> experiences;
+	private List<String> posts;
+	private List<Fishpond> fishponds;
 	private List<String> followers;
 	private List<String> following;
 	private College collegeDetails;
 	private PersonalDetails personalDetails;
 	private String bio;
 	private String intro;
+	private HashMap<String, String> socialLinks;
+	private String profilePhotoURL;
+
+	public UserDTO() {
+	}
 
 	public UserDTO(String userName, String password) {
 		super();
 		this.userName = userName;
 		this.password = password;
+	}
+
+	public UserDTO(String userName, String email, String password, String firstName, String lastName,
+			College collegeDetails) {
+		super();
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.collegeDetails = collegeDetails;
+	}
+
+	public UserDTO(String userName, String email, String password, String firstName, String lastName,
+			College collegeDetails, String profilePhotoURL) {
+		super();
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.collegeDetails = collegeDetails;
+		this.profilePhotoURL = profilePhotoURL;
+	}
+
+	public UserDTO(String userName, String email, String password, String firstName, String lastName, String phone,
+			List<String> personalChats, List<String> groups, List<String> followers, List<String> following,
+			List<Experience> experiences, List<String> posts, List<Fishpond> fishponds, College collegeDetails,
+			PersonalDetails personalDetails, String bio, String intro, HashMap<String, String> socialLinks,
+			String profilePhotoURL) {
+		super();
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phone = phone;
+		this.personalChats = personalChats;
+		this.groups = groups;
+		this.followers = followers;
+		this.following = following;
+		this.experiences = experiences;
+		this.posts = posts;
+		this.fishponds = fishponds;
+		this.collegeDetails = collegeDetails;
+		this.personalDetails = personalDetails;
+		this.bio = bio;
+		this.intro = intro;
+		this.socialLinks = socialLinks;
+		this.profilePhotoURL = profilePhotoURL;
 	}
 
 	// public String getUserId() {
@@ -113,7 +172,28 @@ public class UserDTO {
 		this.following = following;
 	}
 
-	public UserDTO() {
+	public List<Experience> getExperiences() {
+		return experiences;
+	}
+
+	public void setExperiences(List<Experience> experiences) {
+		this.experiences = experiences;
+	}
+
+	public List<String> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<String> posts) {
+		this.posts = posts;
+	}
+
+	public List<Fishpond> getFishponds() {
+		return fishponds;
+	}
+
+	public void setFishponds(List<Fishpond> fishponds) {
+		this.fishponds = fishponds;
 	}
 
 	public College getCollegeDetails() {
@@ -121,16 +201,6 @@ public class UserDTO {
 	}
 
 	public void setCollegeDetails(College collegeDetails) {
-		this.collegeDetails = collegeDetails;
-	}
-
-	public UserDTO(String userName, String email, String password, String firstName, String lastName,
-			College collegeDetails) {
-		this.userName = userName;
-		this.email = email;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
 		this.collegeDetails = collegeDetails;
 	}
 
@@ -158,13 +228,30 @@ public class UserDTO {
 		this.intro = intro;
 	}
 
+	public HashMap<String, String> getSocialLinks() {
+		return socialLinks;
+	}
+
+	public void setSocialLinks(HashMap<String, String> socialLinks) {
+		this.socialLinks = socialLinks;
+	}
+
+	public String getProfilePhotoURL() {
+		return profilePhotoURL;
+	}
+
+	public void setProfilePhotoURL(String profilePhotoURL) {
+		this.profilePhotoURL = profilePhotoURL;
+	}
+
 	@Override
 	public String toString() {
-		return "UserDTO [bio=" + bio + ", collegeDetails=" + collegeDetails + ", email=" + email + ", firstName="
-				+ firstName + ", followers=" + followers + ", following=" + following + ", groups=" + groups
-				+ ", intro=" + intro + ", lastName=" + lastName + ", password=" + password + ", personalChats="
-				+ personalChats + ", personalDetails=" + personalDetails + ", phone=" + phone + ", userName=" + userName
-				+ "]";
+		return "UserDTO [bio=" + bio + ", collegeDetails=" + collegeDetails + ", email=" + email + ", experiences="
+				+ experiences + ", firstName=" + firstName + ", fishponds=" + fishponds + ", followers=" + followers
+				+ ", following=" + following + ", groups=" + groups + ", intro=" + intro + ", lastName=" + lastName
+				+ ", password=" + password + ", personalChats=" + personalChats + ", personalDetails=" + personalDetails
+				+ ", phone=" + phone + ", posts=" + posts + ", profilePhotoURL=" + profilePhotoURL + ", socialLinks="
+				+ socialLinks + ", userName=" + userName + "]";
 	}
 
 }

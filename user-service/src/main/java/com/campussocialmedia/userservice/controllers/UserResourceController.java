@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.campussocialmedia.userservice.Proxies.MediaServiceProxy;
 import com.campussocialmedia.userservice.entity.UserAbout;
 import com.campussocialmedia.userservice.entity.UserDTO;
 import com.campussocialmedia.userservice.entity.UserDetailsResponse;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UserResourceController {
@@ -115,6 +118,13 @@ public class UserResourceController {
         service.addFollowerFollowing(jsonObject.get("follower"), jsonObject.get("following"), token);
         return new ResponseEntity<>("Follower Added", HttpStatus.OK);
 
+    }
+
+    @PostMapping("/uploadProfilePhoto")
+    public ResponseEntity<?> uploadProfilePhoto(@RequestPart(value = "file") MultipartFile file,
+            @RequestPart(value = "userName") String userName) {
+        String fileURL = service.addProfilePhoto(userName, file);
+        return new ResponseEntity<>(fileURL, HttpStatus.OK);
     }
 
 }

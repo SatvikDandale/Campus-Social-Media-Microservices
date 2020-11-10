@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.campussocialmedia.userservice.Proxies.AuthServiceProxy;
+import com.campussocialmedia.userservice.Proxies.MediaServiceProxy;
 import com.campussocialmedia.userservice.entity.User;
 import com.campussocialmedia.userservice.entity.UserAbout;
 import com.campussocialmedia.userservice.entity.UserDTO;
@@ -19,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
@@ -29,6 +31,8 @@ public class UserService {
     private ModelMapper modelMapper;
     @Autowired
     private AuthServiceProxy authServiceProxy;
+    @Autowired
+    private MediaServiceProxy mediaService;
 
     private User convertToEntity(UserDTO user) {
         return modelMapper.map(user, User.class);
@@ -141,6 +145,14 @@ public class UserService {
         String userName = response.getBody().get("userName");
         UserDTO user = getUserByUserName(userName);
         return user;
+    }
+
+    public String addProfilePhoto(String userName, MultipartFile file) {
+        String fileURL = mediaService.uploadFile(file);
+        User user = repository.findUserByUserName(userName);
+        user.setProfilePhotoURL(fileURL);
+        repository.updateUser(user);
+        return fileURL;
     }
 
 }
